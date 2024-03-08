@@ -83,7 +83,7 @@ moveTargetRandomly =()=>{
         if(time==10){
             clearInterval(stopmoving);
             console.log("moving stoped")
-            gameStarted = 0;
+            // gameStarted = 0;
             console.log("g")
         }
 
