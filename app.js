@@ -54,8 +54,6 @@ window.addEventListener("click", e=>{
 
     }
 
-    
-
 })
 
 
@@ -118,23 +116,8 @@ reStartGame = () =>{
     console.log(`miss: ${miss}`);      
     scoreUpdater();
 
-    // hit=0;
-    // miss=0;
-
 }
 
-
-// timer
-// startCounter = setInterval(()=>{
-
-//     if(gameStarted){
-        
-//     }
-
-
-
-// }, 1000)
- 
 
 moveTargetRandomly =()=>{  
 
