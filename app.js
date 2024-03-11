@@ -129,7 +129,7 @@ moveTargetRandomly =()=>{
         target.style.left= `${Math.round(Math.random() * 80+10)}%`;
         console.log("moving")
         
-        if(time==10){
+        if(time==30){
             reStartGame();
             console.log("moving stoped");
             
