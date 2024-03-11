@@ -14,13 +14,19 @@ let miss=0;
 let gameStarted = 0;
 let accuracy = 0;
 let time =1;
+let stopmoving ;
+let gameMode = 1000;
 
 
 
 window.addEventListener("click", e=>{
-   
+    //set game mode 
+    setGameMode(e);
+    
     //    score Calculator
-    scoreCalculator(e);
+    if(gameStarted>0){
+        scoreCalculator(e);
+    }
 
     // Score update
     scoreUpdater();
@@ -28,11 +34,45 @@ window.addEventListener("click", e=>{
     // accuracy update
     accuracyCounter();
 
+
+    // Start moving the target
     if(gameStarted==0){
-        moveTargetRandomly();
+        
+        if(e.target.classList.contains("startGameNow")){
+            moveTargetRandomly();
+            hit=0;
+            miss=0;
+            scoreUpdater();
+        }
+        
     }
 
+    // restart game
+    if(e.target.classList.contains("reStartGameNow")){
+
+        reStartGame();
+
+    }
+
+    
+
 })
+
+
+// setting game mode
+setGameMode = (e) => {
+
+    if(e.target.classList.contains("easy-button")){
+        gameMode = 1500;
+    }
+    if(e.target.classList.contains("medium-button")){
+        gameMode = 1000;
+    }
+    if(e.target.classList.contains("hard-button")){
+        gameMode = 500;
+    }
+
+}
 
 
 // accuracy Counter
@@ -48,14 +88,39 @@ scoreUpdater = () =>{
     hitCountr.innerHTML = `<i class="fa-solid fa-person-military-rifle"></i>HIT : ${hit} `
     missCountr.innerHTML = `<i class="fa-solid fa-person-military-rifle"></i>MISS : ${miss} `
 }
+
 //    score Calculator
-scoreCalculator = (e) =>{
+if(gameStarted>=0){
+        
+    scoreCalculator = (e) =>{
     
-    if(e.target.classList.contains("jumper")){
-        hit++;
-    }else{
-        miss++;
+        if(e.target.classList.contains("jumper")){
+            hit++;
+            console.log(`hit: ${hit}`);
+        }else{
+            miss++;
+            console.log(`miss: ${miss}`);
+        }
     }
+    
+}
+
+// restart Game
+reStartGame = () =>{
+
+    time=0;
+    gameStarted = 0;
+    clearInterval(stopmoving);
+    target.style.top= "50%";
+    target.style.left= "50%";
+    console.log("restarted")
+    console.log(`hit: ${hit}`);
+    console.log(`miss: ${miss}`);      
+    scoreUpdater();
+
+    // hit=0;
+    // miss=0;
+
 }
 
 
@@ -69,11 +134,12 @@ scoreCalculator = (e) =>{
 
 
 // }, 1000)
-
+ 
 
 moveTargetRandomly =()=>{  
 
-    let stopmoving = setInterval(()=>{
+    stopmoving = setInterval(()=>{
+        
         
         gameStarted = 1;
         target.style.top= `${Math.round(Math.random() * 60+30)}%`;
@@ -81,14 +147,13 @@ moveTargetRandomly =()=>{
         console.log("moving")
         
         if(time==10){
-            clearInterval(stopmoving);
-            console.log("moving stoped")
-            // gameStarted = 0;
-            console.log("g")
+            reStartGame();
+            console.log("moving stoped");
+            
         }
 
         time++;
-    }, 1000)
+    }, gameMode)
 }
 
 
